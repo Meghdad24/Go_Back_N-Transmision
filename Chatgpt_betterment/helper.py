@@ -1,20 +1,45 @@
 import random
-import time
 
+class Go_back_n_codeword:
 
-def generate_binary_string(n):
-    number = random.getrandbits(n)
-    binary_string = format(number, '0b').zfill(n)
-    return binary_string
-
-
-class Go_back_n_data:
-
-    def __init__(self, data, index):
+    def __init__(self, data, fcs, index):
         self.data = data
+        self.fcs = fcs
         self.index = index
 
-    def __str__(self):
-        return f"{self.data}{self.index}"
+    def set_fcs(self,fcs):
+        self.fcs = fcs
 
-# Optional: You can add more helper functions or classes here if needed.
+    def get_codeword(self):
+        return f"{self.data}{self.fcs}"
+
+    def __str__(self):
+        return f"{self.data}{self.fcs},{self.index}"
+
+
+def xor(a, b):
+    result = []
+    for i in range(1, len(b)):
+        if a[i] == b[i]:
+            result.append('0')
+        else:
+            result.append('1')
+    return ''.join(result)
+
+
+def mod2div(data: str, p: str):
+    pick = len(p)
+    tmp = data[0:pick]
+    while pick < len(data):
+        if tmp[0] == '1':
+            tmp = xor(p, tmp) + data[pick]
+        else:
+            tmp = xor('0' * pick, tmp) + data[pick]
+        pick += 1
+
+    if tmp[0] == '1':
+        tmp = xor(p, tmp)
+    else:
+        tmp = xor('0' * pick, tmp)
+
+    return tmp
