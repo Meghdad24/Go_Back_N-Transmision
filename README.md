@@ -1,2 +1,5 @@
 # Go_Back_N with SocketProgramming
-Socket programming training!
+Go Back N data transmision protocol that contains:
+* Socket programming
+* Error detection (CRC, Out of order, Timeouted for recv)
+* little UI
